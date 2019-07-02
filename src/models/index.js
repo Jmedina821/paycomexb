@@ -6,6 +6,8 @@ import Bank from './bank';
 import branchOffice from './branch-office';
 import Country from './country';
 import Order from './order';
+import Currency from './currency';
+import Exchange from './exchange';
 
 const connectDb = () => {
   if (process.env.TEST_DATABASE_URL) {
@@ -23,7 +25,7 @@ const connectDb = () => {
   }
 };
 
-const models = { User, Message, Bank, branchOffice, Country, Order };
+const models = { User, Message, Bank, branchOffice, Country, Order, Currency, Exchange };
 
 export { connectDb };
 
