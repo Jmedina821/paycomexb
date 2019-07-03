@@ -52,7 +52,7 @@ const orderSchema = new mongoose.Schema(
     }
   },
   {
-    timestamps: true,
+    timestamps: true
   },
 );
 
