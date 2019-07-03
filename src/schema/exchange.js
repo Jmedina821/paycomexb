@@ -17,11 +17,19 @@ export default gql`
     pageInfo: PageInfo!
   }
 
+  extend type Subscription {
+    exchangeUpdated: ExchangeUpdated!
+  }
+
   type Exchange {
     id: ID!
     value: Float!
     origin_country: Country!
     destination_country: Country!
+  }
+
+  type ExchangeUpdated {
+    exchange: Exchange!
   }
 
 `;

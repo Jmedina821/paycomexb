@@ -1,5 +1,6 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { isAuthenticated } from './authorization';
+import pubsub, { EVENTS } from '../subscription';
 
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
@@ -44,7 +45,7 @@ export default {
   },
 
   Mutation: {
-    
+
     createExchange: combineResolvers(
       isAuthenticated,
       async (parent,
@@ -53,10 +54,15 @@ export default {
           destination_country
         },
         { models }) => {
+
         const exchange = await models.Exchange.create({
           value,
           origin_country,
           destination_country
+        });
+
+        pubsub.publish(EVENTS.MESSAGE.UPDATED, {
+          exchangeUpdated: { exchange }
         });
 
         return exchange;
@@ -76,6 +82,12 @@ export default {
         }
       },
     ),
+  },
+
+  Subscription: {
+    exchangeUpdated: {
+      subscribe: () => pubsub.asyncIterator(EVENTS.MESSAGE.UPDATED)
+    }
   },
 
   Exchange: {
