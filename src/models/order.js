@@ -49,10 +49,6 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BranchOffice',
       required: true
-    },
-    address: {
-      type: String,
-      required: true
     }
   },
   {

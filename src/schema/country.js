@@ -17,11 +17,6 @@ export default gql`
     pageInfo: PageInfo!
   }
 
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String!
-  }
-
   type Country {
     id: ID!
     name: String!

@@ -8,7 +8,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createBranchOffice(value: Number!, origin_country: ID!, destination_country: ID!): BranchOffice!
+    createBranchOffice(name: String!, country: ID!, address: String!): branchOffice!
     deleteBranchOffice(id: ID!): Boolean!
   }
 
@@ -17,16 +17,11 @@ export default gql`
     pageInfo: PageInfo!
   }
 
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String!
-  }
-
   type branchOffice {
     id: ID!
-    value: Number!
-    origin_country: Country!
-    destination_country: Country!
+    name: String!
+    country: Country!
+    address: String!
   }
 
 `;

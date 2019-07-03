@@ -22,6 +22,6 @@ const exchangeSchema = new mongoose.Schema(
 	},
 );
 
-const Currency = mongoose.model('currency', exchangeSchema);
+const Exchange = mongoose.model('Exchange', exchangeSchema);
 
-export default Currency;
+export default Exchange;

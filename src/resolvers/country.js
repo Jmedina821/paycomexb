@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from './authorization';
+
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
@@ -76,8 +79,8 @@ export default {
     },
 
     Country: {
-        currency: async (currency, args, { models }) => {
-            return await models.Currency.findById(currency);
+        currency: async (country, args, { models }) => {
+            return await models.Currency.findById(country.currency);
         },
     },
 

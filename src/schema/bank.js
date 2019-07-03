@@ -16,11 +16,6 @@ export default gql`
     pageInfo: PageInfo!
   }
 
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String!
-  }
-
   type Bank {
     id: ID!
     name: String!

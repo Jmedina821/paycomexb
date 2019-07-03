@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from './authorization';
+
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
@@ -44,11 +47,14 @@ export default {
     createCurrency: combineResolvers(
       isAuthenticated,
       async (parent,
-        { name,
+        { 
+          name,
+          short
         },
         { models }) => {
         const currency = await models.Currency.create({
           name,
+          short
         });
 
         return currency;

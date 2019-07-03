@@ -8,7 +8,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createExchange(value: Number!, origin_country: ID!, destination_country: ID!): Exchange!
+    createExchange(value: Float!, origin_country: ID!, destination_country: ID!): Exchange!
     deleteExchange(id: ID!): Boolean!
   }
 
@@ -17,14 +17,9 @@ export default gql`
     pageInfo: PageInfo!
   }
 
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String!
-  }
-
   type Exchange {
     id: ID!
-    value: Number!
+    value: Float!
     origin_country: Country!
     destination_country: Country!
   }

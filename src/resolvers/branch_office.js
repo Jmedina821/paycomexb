@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from './authorization';
+
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
@@ -13,7 +16,7 @@ export default {
           },
         }
         : {};
-      const branchOffices = await models.BranchOffice.find(
+      const branchOffices = await models.branchOffice.find(
         cursorOptions,
         null,
         {
@@ -35,8 +38,8 @@ export default {
         },
       };
     },
-    branch_office: async (parent, { id }, { models }) => {
-      return await models.BranchOffice.findById(id);
+    branchOffice: async (parent, { id }, { models }) => {
+      return await models.branchOffice.branchOffice(id);
     },
   },
 
@@ -49,7 +52,7 @@ export default {
           address
         },
         { models }) => {
-        const branchOffice = await models.BranchOffice.create({
+        const branchOffice = await models.branchOffice.branchOffice({
           name,
           country,
           address
@@ -62,7 +65,7 @@ export default {
     deleteBranchOffice: combineResolvers(
       isAuthenticated,
       async (parent, { id }, { models }) => {
-        const branchOffice = await models.BranchOffice.findById(id);
+        const branchOffice = await models.branchOffice.branchOffice(id);
 
         if (branchOffice) {
           await branchOffice.remove();
@@ -75,8 +78,8 @@ export default {
   },
 
   branchOffice: {
-    country: async (country, args, { models }) => {
-      return await models.Country.findById(country);
+    country: async (branchOffice, args, { models }) => {
+      return await models.Country.findById(branchOffice.country);
     },
   },
 

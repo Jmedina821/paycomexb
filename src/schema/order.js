@@ -3,23 +3,29 @@ import { gql } from 'apollo-server-express';
 export default gql`
 
   extend type Query {
-    orders(cursor: String, limit: Int): BranchOfficeConnection!
-    order(id: ID!): branchOffice!
+    orders(cursor: String, limit: Int): OrderConnection!
+    order(id: ID!): Order!
   }
 
   extend type Mutation {
-    createBranchOffice(value: Number!, origin_country: ID!, destination_country: ID!): BranchOffice!
-    deleteBranchOffice(id: ID!): Boolean!
+    createOrder(
+     sender: ID!,
+     status: String!,
+     origin_country: ID!,
+     destination_country: ID!,
+     origin_bank: ID!,
+     destination_bank: ID!,
+     branch_office: ID!,
+     receiver: ID!,
+     order_number: String!,
+     amount: Float!
+     ): Order!
+    deleteOrder(id: ID!): Boolean!
   }
 
-  type BranchOfficeConnection {
-    edges: [branchOffice!]!
+  type OrderConnection {
+    edges: [Order!]!
     pageInfo: PageInfo!
-  }
-
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String!
   }
 
   type Order {
@@ -28,9 +34,12 @@ export default gql`
     status: String!
     origin_country: Country!
     destination_country: Country!
+    origin_bank: Bank!
+    destination_bank: Bank!
+    branch_office: branchOffice!
     receiver: User!
     order_number: String!
-    amount: Number!
+    amount: Float!
   }
 
 `;

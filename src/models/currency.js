@@ -5,6 +5,10 @@ const currencySchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
+        },
+        short: {
+            type: String,
+            required: true
         }
     },
     {
@@ -12,6 +16,6 @@ const currencySchema = new mongoose.Schema(
     },
 );
 
-const Currency = mongoose.model('currency', currencySchema);
+const Currency = mongoose.model('Currency', currencySchema);
 
 export default Currency;

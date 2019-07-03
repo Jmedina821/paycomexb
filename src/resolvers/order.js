@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from './authorization';
+
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
@@ -54,11 +57,10 @@ export default {
           amount,
           origin_country,
           destination_country,
-          branch_office,
-          address
+          branch_office
         },
         { models }) => {
-        const exchange = await models.Order.create({
+        const order = await models.Order.create({
           sender,
           status,
           origin_bank,
@@ -68,8 +70,7 @@ export default {
           amount,
           origin_country,
           destination_country,
-          branch_office,
-          address
+          branch_office
         });
 
         return order;
@@ -91,27 +92,27 @@ export default {
     ),
   },
 
-  Exchange: {
-    sender: async (sender, args, { models }) => {
-      return await models.User.findById(sender);
+  Order: {
+    sender: async (order, args, { models }) => {
+      return await models.User.findById(order.sender);
     },
-    receiver: async (receiver, args, { models }) => {
-      return await models.User.findById(receiver);
+    receiver: async (order, args, { models }) => {
+      return await models.User.findById(order.receiver);
     },
-    origin_bank: async (origin_bank, args, { models }) => {
-      return await models.Bank.findById(origin_bank);
+    origin_bank: async (order, args, { models }) => {
+      return await models.Bank.findById(order.origin_bank);
     },
-    destination_bank: async (destination_bank, args, { models }) => {
-      return await models.Bank.findById(destination_bank);
+    destination_bank: async (order, args, { models }) => {
+      return await models.Bank.findById(order.destination_bank);
     },
-    origin_country: async (origin_country, args, { models }) => {
-      return await models.Country.findById(origin_country);
+    origin_country: async (order, args, { models }) => {
+      return await models.Country.findById(order.origin_country);
     },
-    destination_country: async (destination_country, args, { models }) => {
-      return await models.Country.findById(destination_country);
+    destination_country: async (order, args, { models }) => {
+      return await models.Country.findById(order.destination_country);
     },
-    branch_office: async (branch_office, args, { models }) => {
-      return await models.BranchOffice.findById(branch_office);
+    branch_office: async (order, args, { models }) => {
+      return await models.BranchOffice.findById(order.branch_office);
     }
   },
 
