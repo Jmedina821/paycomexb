@@ -11,10 +11,6 @@ const countrySchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Currency',
             required: true
-        },
-        states: {
-            type: Array,
-            required: true
         }
     },
     {

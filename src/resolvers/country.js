@@ -49,14 +49,12 @@ export default {
             async (parent,
                 {
                     name,
-                    currency,
-                    status
+                    currency
                 },
                 { models }) => {
                 const country = await models.Country.create({
                     name,
-                    currency,
-                    status
+                    currency
                 });
 
                 return country;
