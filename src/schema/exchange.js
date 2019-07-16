@@ -5,6 +5,7 @@ export default gql`
   extend type Query {
     exchanges(cursor: String, limit: Int): ExchangeConnection!
     exchange(id: ID!): Exchange!
+    lastExchangeByCountry(origin_country: ID!, destination_country: ID!): [Exchange]!
   }
 
   extend type Mutation {
@@ -26,6 +27,7 @@ export default gql`
     value: Float!
     origin_country: Country!
     destination_country: Country!
+    createdAt: Date!
   }
 
   type ExchangeUpdated {

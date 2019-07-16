@@ -66,6 +66,7 @@ export default {
       isAuthenticated,
       isMessageOwner,
       async (parent, { id }, { models }) => {
+        
         const message = await models.Message.findById(id);
 
         if (message) {
