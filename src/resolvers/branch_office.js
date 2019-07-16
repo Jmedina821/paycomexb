@@ -52,7 +52,7 @@ export default {
           address
         },
         { models }) => {
-        const branchOffice = await models.branchOffice.branchOffice({
+        const branchOffice = await models.branchOffice.create({
           name,
           country,
           address
@@ -65,7 +65,7 @@ export default {
     deleteBranchOffice: combineResolvers(
       isAuthenticated,
       async (parent, { id }, { models }) => {
-        const branchOffice = await models.branchOffice.branchOffice(id);
+        const branchOffice = await models.branchOffice.delete(id);
 
         if (branchOffice) {
           await branchOffice.remove();

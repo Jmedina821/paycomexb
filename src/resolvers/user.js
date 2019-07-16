@@ -6,6 +6,7 @@ import { isAdmin, isAuthenticated } from './authorization';
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, username, role } = user;
+  
   return await jwt.sign({ id, email, username, role }, secret, {
     expiresIn,
   });
@@ -31,13 +32,14 @@ export default {
   Mutation: {
     signUp: async (
       parent,
-      { username, email, password },
+      { username, email, password, branch_office },
       { models, secret },
     ) => {
       const user = await models.User.create({
         username,
         email,
         password,
+        branch_office
       });
 
       return { token: createToken(user, secret, '30m') };
@@ -62,7 +64,7 @@ export default {
         throw new AuthenticationError('Invalid password.');
       }
 
-      return { token: createToken(user, secret, '30m') };
+      return { token: createToken(user, secret, '24h') };
     },
 
     updateUser: combineResolvers(

@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  branch_office: {
+    type: mongoose.Schema.Types.ObjectId
+  }
 });
 
 userSchema.statics.findByLogin = async function(login) {
