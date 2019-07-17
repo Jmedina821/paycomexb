@@ -13,6 +13,7 @@ const createToken = async (user, secret, expiresIn) => {
 };
 
 export default {
+
   Query: {
     users: async (parent, args, { models }) => {
       return await models.User.find();
@@ -42,7 +43,7 @@ export default {
         branch_office
       });
 
-      return { token: createToken(user, secret, '30m') };
+      return { token: createToken(user, secret, '24h') };
     },
 
     signIn: async (

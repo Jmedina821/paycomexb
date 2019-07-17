@@ -8,7 +8,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createCountry(name: String!, currency: ID!): Country!
+    createCountry(name: String!, currency: ID!, states: [String!]!): Country!
     deleteCountry(id: ID!): Boolean!
   }
 
@@ -21,6 +21,7 @@ export default gql`
     id: ID!
     name: String!
     currency: Currency!
+    states: [String!]!
   }
 
 `;

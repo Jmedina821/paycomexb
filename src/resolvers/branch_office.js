@@ -49,12 +49,14 @@ export default {
       async (parent,
         { name,
           country,
+          state,
           address
         },
         { models }) => {
         const branchOffice = await models.branchOffice.create({
           name,
           country,
+          state,
           address
         });
 

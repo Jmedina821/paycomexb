@@ -11,6 +11,10 @@ const branchOfficeSchema = new mongoose.Schema(
       ref: 'countries',
       required: true
     },
+    state: {
+      type: String,
+      required: true
+    },
     address: {
       type: String,
       required: true

@@ -1,21 +1,24 @@
 import mongoose from 'mongoose';
 
 const countrySchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            unique: true,
-            required: true,
-        },
-        currency: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Currency',
-            required: true
-        }
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: true,
     },
-    {
-        timestamps: true,
+    currency: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Currency',
+      required: true
     },
+    states: {
+      type: Array
+    }
+  },
+  {
+    timestamps: true,
+  },
 );
 
 const Country = mongoose.model('Country', countrySchema);
