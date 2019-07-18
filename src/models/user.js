@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
+    default: 'USER'
   },
   branch_office: {
     type: mongoose.Schema.Types.ObjectId

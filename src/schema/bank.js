@@ -1,8 +1,9 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+
   extend type Query {
-    banks(cursor: String, limit: Int): MessageConnection!
+    banks(cursor: String, limit: Int): BankConnection!
     bank(id: ID!): Bank!
   }
 
