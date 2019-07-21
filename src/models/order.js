@@ -32,7 +32,11 @@ const orderSchema = new mongoose.Schema(
       required: true
     },
     amount: {
-      type: String,
+      type: Number,
+      required: true
+    },
+    destination_amount: {
+      type: Number,
       required: true
     },
     origin_country: {
@@ -49,6 +53,11 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BranchOffice',
       required: true
+    },
+    bank_operation_number: {
+      type: String,
+      required: true,
+      unique: true
     }
   },
   {

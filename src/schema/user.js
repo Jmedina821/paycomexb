@@ -13,6 +13,8 @@ export default gql`
       email: String!
       password: String!
       branch_office: ID
+      phone: String
+      dni: String!
     ): Token!
 
     signIn(login: String!, password: String!): Token!
@@ -30,6 +32,8 @@ export default gql`
     email: String!
     role: String
     branch_office: branchOffice
+    phone: String
+    dni: String!
     messages: [Message!]
   }
 `;

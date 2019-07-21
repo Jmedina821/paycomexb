@@ -25,3 +25,12 @@ export const isMessageOwner = async (
 
   return skip;
 };
+
+export const ROLES = [
+  'MASTER_ADMIN',
+  'COUNTRY_ADMIN',
+  'REGION_ADMIN',
+  'BRANCH_ADMIN',
+  'OPERATOR',
+  'USER'
+];

@@ -50,14 +50,16 @@ export default {
         { name,
           country,
           state,
-          address
+          address,
+          office_number
         },
         { models }) => {
         const branchOffice = await models.branchOffice.create({
           name,
           country,
           state,
-          address
+          address,
+          office_number
         });
 
         return branchOffice;

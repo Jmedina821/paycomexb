@@ -12,6 +12,17 @@ const countrySchema = new mongoose.Schema(
       ref: 'Currency',
       required: true
     },
+    alpha2code: {
+      type: String,
+      unique: true,
+      required: true,
+      minlength: 2
+    },
+    country_code: {
+      type: Number,
+      unique: true,
+      required: true
+    },
     states: {
       type: Array
     }

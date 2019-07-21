@@ -18,6 +18,10 @@ const branchOfficeSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true
+    },
+    office_number: {
+      type: String,
+      unique: true
     }
   },
   {

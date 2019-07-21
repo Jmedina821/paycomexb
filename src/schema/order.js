@@ -10,15 +10,14 @@ export default gql`
   extend type Mutation {
     createOrder(
      sender: ID!,
-     status: String!,
      origin_country: ID!,
      destination_country: ID!,
      origin_bank: ID!,
      destination_bank: ID!,
      branch_office: ID!,
      receiver: ID!,
-     order_number: String!,
-     amount: Float!
+     amount: Float!,
+     bank_operation_number: String!
      ): Order!
     deleteOrder(id: ID!): Boolean!
   }
@@ -40,6 +39,8 @@ export default gql`
     receiver: User!
     order_number: String!
     amount: Float!
+    destination_amount: Float!
+    bank_operation_number: String!
   }
 
 `;

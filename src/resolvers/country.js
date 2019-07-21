@@ -50,13 +50,17 @@ export default {
                 {
                     name,
                     currency,
-                    states
+                    states,
+                    alpha2code,
+                    country_code
                 },
                 { models }) => {
                 const country = await models.Country.create({
                     name,
                     currency,
-                    states
+                    states,
+                    alpha2code,
+                    country_code
                 });
 
                 return country;

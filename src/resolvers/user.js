@@ -6,7 +6,7 @@ import { isAdmin, isAuthenticated } from './authorization';
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, username, role } = user;
-  
+
   return await jwt.sign({ id, email, username, role }, secret, {
     expiresIn,
   });
@@ -33,14 +33,11 @@ export default {
   Mutation: {
     signUp: async (
       parent,
-      { username, email, password, branch_office },
+      { username, email, password, branch_office, phone, dni },
       { models, secret },
     ) => {
       const user = await models.User.create({
-        username,
-        email,
-        password,
-        branch_office
+        username, email, password, branch_office, phone, dni
       });
 
       return { token: createToken(user, secret, '24h') };

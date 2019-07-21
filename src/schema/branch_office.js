@@ -8,7 +8,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createBranchOffice(name: String!, country: ID!, state: String!, address: String!): branchOffice!
+    createBranchOffice(name: String!, country: ID!, state: String!, address: String!, office_number: Int!): branchOffice!
     deleteBranchOffice(id: ID!): Boolean!
   }
 
@@ -23,6 +23,7 @@ export default gql`
     country: Country!
     state: String!
     address: String!
+    office_number: Int!
   }
 
 `;

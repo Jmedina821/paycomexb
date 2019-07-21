@@ -45,13 +45,13 @@ export default {
       return await models.Exchange.findById(id);
     },
     lastExchangeByCountry: async (parent, { origin_country, destination_country }, { models }) => {
-      const response = await models.Exchange.find({
+      const exchange = await models.Exchange.find({
         origin_country: moongose.Types.ObjectId(origin_country),
         destination_country: moongose.Types.ObjectId(destination_country)
       })
         .sort({ createdAt: -1 })
         .limit(1);
-      return response;
+      return exchange;
     }
   },
 

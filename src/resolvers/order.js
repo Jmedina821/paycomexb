@@ -1,10 +1,34 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { isAuthenticated } from './authorization';
+import moongose from 'mongoose';
 
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
   Buffer.from(string, 'base64').toString('ascii');
+
+const newOrderId = async (branchOfficeId, originCountryId, models) => {
+
+  const country = await models.Country.findById(originCountryId);
+  const branch_office = await models.branchOffice.findById(branchOfficeId);
+  const lastOrder = await models.Order.countDocuments();
+
+  return `${branch_office.office_number}${country.country_code}${lastOrder + 1}`;
+
+}
+
+const calculateAmount = async (originCountryId, destinationCountryId, amount, models) => {
+
+  const exchange = await models.Exchange.find({
+    origin_country: moongose.Types.ObjectId(originCountryId),
+    destination_country: moongose.Types.ObjectId(destinationCountryId)
+  })
+    .sort({ createdAt: -1 })
+    .limit(1);
+  const destination_amount = exchange.length > 0 ? (exchange[0].value * amount) : 0;
+  return destination_amount;
+
+}
 
 export default {
   Query: {
@@ -40,7 +64,7 @@ export default {
     },
     order: async (parent, { id }, { models }) => {
       return await models.Order.findById(id);
-    },
+    }
   },
 
   Mutation: {
@@ -53,13 +77,17 @@ export default {
           origin_bank,
           destination_bank,
           receiver,
-          order_number,
           amount,
           origin_country,
           destination_country,
-          branch_office
+          branch_office,
+          bank_operation_number
         },
         { models }) => {
+
+        const order_number = await newOrderId(branch_office, origin_country, models);
+        const destination_amount = await calculateAmount(origin_country, destination_country, amount, models);
+
         const order = await models.Order.create({
           sender,
           status,
@@ -68,9 +96,12 @@ export default {
           receiver,
           order_number,
           amount,
+          destination_amount,
           origin_country,
           destination_country,
-          branch_office
+          branch_office,
+          destination_amount,
+          bank_operation_number
         });
 
         return order;
