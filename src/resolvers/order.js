@@ -25,8 +25,9 @@ const calculateAmount = async (originCountryId, destinationCountryId, amount, mo
   })
     .sort({ createdAt: -1 })
     .limit(1);
+    console.log(exchange);
   const destination_amount = exchange.length > 0 ? (exchange[0].value * amount) : 0;
-  return destination_amount;
+  return {destination_amount, exchange: exchange[0].id};
 
 }
 
@@ -76,7 +77,8 @@ export default {
           status,
           origin_bank,
           destination_bank,
-          receiver,
+          receiver_dni,
+          receiver_phone,
           amount,
           origin_country,
           destination_country,
@@ -86,14 +88,15 @@ export default {
         { models }) => {
 
         const order_number = await newOrderId(branch_office, origin_country, models);
-        const destination_amount = await calculateAmount(origin_country, destination_country, amount, models);
+        const {destination_amount, exchange} = await calculateAmount(origin_country, destination_country, amount, models);
 
         const order = await models.Order.create({
           sender,
           status,
           origin_bank,
           destination_bank,
-          receiver,
+          receiver_dni,
+          receiver_phone,
           order_number,
           amount,
           destination_amount,
@@ -101,7 +104,8 @@ export default {
           destination_country,
           branch_office,
           destination_amount,
-          bank_operation_number
+          bank_operation_number,
+          exchange
         });
 
         return order;
@@ -127,8 +131,8 @@ export default {
     sender: async (order, args, { models }) => {
       return await models.User.findById(order.sender);
     },
-    receiver: async (order, args, { models }) => {
-      return await models.User.findById(order.receiver);
+    exchange: async (order, args, { models }) => {
+      return await models.Exchange.findById(order.exchange);
     },
     origin_bank: async (order, args, { models }) => {
       return await models.Bank.findById(order.origin_bank);

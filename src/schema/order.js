@@ -15,7 +15,8 @@ export default gql`
      origin_bank: ID!,
      destination_bank: ID!,
      branch_office: ID!,
-     receiver: ID!,
+     receiver_dni: String!,
+     receiver_phone: String!,
      amount: Float!,
      bank_operation_number: String!
      ): Order!
@@ -36,11 +37,14 @@ export default gql`
     origin_bank: Bank!
     destination_bank: Bank!
     branch_office: branchOffice!
-    receiver: User!
+    receiver_dni: String!
+    receiver_phone: String!
     order_number: String!
     amount: Float!
     destination_amount: Float!
     bank_operation_number: String!
+    exchange: Exchange
+    createdAt: Date!
   }
 
 `;

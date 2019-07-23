@@ -28,6 +28,12 @@ export default {
 
       return await models.User.findById(me.id);
     },
+    myOrders: async (parent, args, { models, me }) => {
+      if (!me) {
+        return null
+      }
+      return await models.Order.find({ sender: me.id })
+    }
   },
 
   Mutation: {

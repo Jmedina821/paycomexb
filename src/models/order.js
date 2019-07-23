@@ -22,9 +22,12 @@ const orderSchema = new mongoose.Schema(
       ref: 'Bank',
       required: true
     },
-    receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+    receiver_dni: {
+      type: String,
+      required: true
+    },
+    receiver_phone: {
+      type: String,
       required: true
     },
     order_number: {
@@ -52,6 +55,11 @@ const orderSchema = new mongoose.Schema(
     branch_office: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BranchOffice',
+      required: true
+    },
+    exchange: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Exchange',
       required: true
     },
     bank_operation_number: {

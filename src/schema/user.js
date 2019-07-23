@@ -5,6 +5,7 @@ export default gql`
     users: [User!]
     user(id: ID!): User
     me: User
+    myOrders: [Order]!
   }
 
   extend type Mutation {
