@@ -25,22 +25,26 @@ const calculateAmount = async (originCountryId, destinationCountryId, amount, mo
   })
     .sort({ createdAt: -1 })
     .limit(1);
-    console.log(exchange);
+
   const destination_amount = exchange.length > 0 ? (exchange[0].value * amount) : 0;
-  return {destination_amount, exchange: exchange[0].id};
+  return { destination_amount, exchange: exchange[0].id };
 
 }
 
 export default {
   Query: {
-    orders: async (parent, { cursor, limit = 100 }, { models }) => {
-      const cursorOptions = cursor
+    orders: async (parent, { cursor, limit = 100, country, branchOffice }, { models }) => {
+      let cursorOptions = cursor
         ? {
           createdAt: {
             $lt: fromCursorHash(cursor),
           },
         }
         : {};
+
+      country && Object.assign(cursorOptions, { origin_country: moongose.Types.ObjectId(country) });
+      branchOffice && Object.assign(cursorOptions, { branch_office: moongose.Types.ObjectId(branchOffice) });
+
       const orders = await models.Order.find(
         cursorOptions,
         null,
@@ -88,7 +92,7 @@ export default {
         { models }) => {
 
         const order_number = await newOrderId(branch_office, origin_country, models);
-        const {destination_amount, exchange} = await calculateAmount(origin_country, destination_country, amount, models);
+        const { destination_amount, exchange } = await calculateAmount(origin_country, destination_country, amount, models);
 
         const order = await models.Order.create({
           sender,
@@ -147,7 +151,7 @@ export default {
       return await models.Country.findById(order.destination_country);
     },
     branch_office: async (order, args, { models }) => {
-      return await models.BranchOffice.findById(order.branch_office);
+      return await models.branchOffice.findById(order.branch_office);
     }
   },
 

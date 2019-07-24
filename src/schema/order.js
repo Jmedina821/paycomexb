@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
 
   extend type Query {
-    orders(cursor: String, limit: Int): OrderConnection!
+    orders(cursor: String, limit: Int, country: ID, branchOffice: ID): OrderConnection!
     order(id: ID!): Order!
   }
 

@@ -1,5 +1,6 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { isAuthenticated } from './authorization';
+import mongoose from 'mongoose';
 
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
@@ -41,6 +42,18 @@ export default {
     branchOffice: async (parent, { id }, { models }) => {
       return await models.branchOffice.branchOffice(id);
     },
+    branchOfficesByCountry: async (parent, { country }, { models }) => {
+      return await models.branchOffice.aggregate([
+        { $match: { country: mongoose.Types.ObjectId(country) } },
+        { $group: { _id: '$state', branch_offices: { $push: "$$ROOT" } } },
+        { $addFields: { state: '$_id'} },
+        {
+          $project: {
+            _id: 0
+          }
+        }
+      ]);
+    }
   },
 
   Mutation: {
